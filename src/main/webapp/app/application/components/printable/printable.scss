@@ -1,0 +1,82 @@
+.page-wrapper {
+  background-color: #e4e5e6;
+  margin: 0;
+  padding: 1rem;
+  .pages {
+    display: inline-block;
+    min-width: 100%;
+  }
+}
+
+.page {
+  box-sizing: border-box;
+  margin: 0 auto 1rem auto;
+  background-color: #ffffff;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  &.A4 {
+    &.portrait {
+      width: 21cm;
+      max-width: 21cm;
+      height: 29.6cm;
+      min-height: 29.6cm;
+    }
+    &.landscape {
+      width: 29.7cm;
+      max-width: 29.7cm;
+      height: 20.9cm;
+      min-height: 20.9cm;
+    }
+  }
+  &.A5 {
+    &.portrait {
+      width: 14.85cm;
+      max-width: 14.85cm;
+      height: 20.9cm;
+      min-height: 20.9cm;
+    }
+    &.landscape {
+      width: 21cm;
+      max-width: 21cm;
+      height: 14.75cm;
+      min-height: 14.75cm;
+    }
+  }
+  &.Letter {
+    &.portrait {
+      width: 21.6cm;
+      max-width: 21.6cm;
+      height: 27.8cm;
+      min-height: 27.8cm;
+    }
+    &.landscape {
+      width: 27.9cm;
+      max-width: 27.9cm;
+      height: 21.5cm;
+      min-height: 21.5cm;
+    }
+  }
+  &.Legal {
+    &.portrait {
+      width: 21.6cm;
+      max-width: 21.6cm;
+      height: 35.5cm;
+      min-height: 35.5cm;
+    }
+    &.landscape {
+      width: 35.6cm;
+      max-width: 35.6cm;
+      height: 21.5cm;
+      min-height: 21.5cm;
+    }
+  }
+  .pagination {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 12px;
+  }
+}

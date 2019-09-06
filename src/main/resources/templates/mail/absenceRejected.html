@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mail/fragments :: page-head(#{email.absenceRejected.title})"></head>
+<body style="margin: 0; padding: 0; text-align: center;" bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Helvetica, Arial, sans-serif;">
+    <tbody>
+    <tr th:replace="mail/fragments :: table-header"></tr>
+    <tr>
+        <td style="line-height: 28px;">
+            <p th:text="#{email.absenceRejected.greeting(${resource.getLastName()})}"></p>
+            <p th:text="#{email.absenceRejected.text1(${resource.getFirstName()}, ${resource.getLastName()})}"></p>
+            <p th:text="#{email.absenceRejected.text2(${absence.getStart()}, ${absence.getEnd()}, ${absence.getNumberDays()}, ${absence_type.getType()})}"></p>
+            <div th:if="${absence.getValidationComment()}">
+                <p th:text="#{email.absenceRejected.text3(${absence.getValidationComment()})}"></p>
+            </div>
+            <p>
+                <span th:text="#{email.absenceRejected.signuature}">Regards, </span>
+            </p>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:replace="mail/fragments :: table-footer"></tfoot>
+</table>
+</body>
+</html>

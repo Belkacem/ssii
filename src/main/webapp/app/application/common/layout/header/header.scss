@@ -1,0 +1,166 @@
+.ant-layout-header {
+  padding: 0 20px;
+  height: 58px;
+  line-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .brand-logo {
+    height: 40px;
+    line-height: 38px;
+    margin-right: 24px;
+    float: left;
+  }
+  .header-container {
+    width: 100%;
+    max-width: 1500px;
+    margin-right: auto;
+    margin-left: auto;
+    > * {
+      height: 40px;
+      line-height: 40px;
+    }
+    > .ant-menu {
+      height: 40px;
+      line-height: 40px;
+      .ant-menu-item,
+      .ant-menu-submenu-title {
+        padding: 0;
+        margin-right: 10px;
+        &:last-child {
+          margin: 0;
+        }
+        &.ant-btn-icon-only {
+          padding: 0 12px;
+          .anticon {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+.dropdown-user {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  line-height: initial;
+  .avatar {
+    margin-right: 6px;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    .avatar-inner {
+      font-size: 100% !important;
+    }
+  }
+  .user-name {
+    display: inline-block;
+    text-align: left;
+    height: 28px;
+    vertical-align: middle;
+    span {
+      display: block;
+      line-height: 14px;
+      font-weight: bold;
+      max-width: 170px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    small {
+      display: block;
+      line-height: 12px;
+      opacity: 0.6;
+    }
+  }
+}
+.ant-menu-submenu {
+  .avatar {
+    margin-right: 6px;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    .avatar-inner {
+      font-size: 100% !important;
+    }
+  }
+}
+
+.card-items-modal {
+  .ant-modal-body {
+    .card-item {
+      display: inline-block;
+      margin: 12px 6px 6px;
+      position: relative;
+      border: 1px solid #cfd8dc;
+      border-radius: 4px;
+      overflow: hidden;
+      padding: 0;
+      width: 100px;
+      height: 150px;
+      cursor: pointer;
+      opacity: 0.7;
+      .avatar {
+        border-bottom: 1px solid #cfd8dc;
+      }
+      > span {
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        display: block;
+        padding: 0 6px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-height: 36px;
+        max-width: 100px;
+      }
+      &:hover {
+        border: 1px solid #90a4ae;
+        border-radius: 4px;
+        box-shadow: -1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+        opacity: 0.9;
+      }
+      &.selected {
+        opacity: 1;
+        border: 2px solid #607d8b;
+      }
+      &.card-item-add {
+        border-style: dashed;
+        border-width: 2px;
+        color: #607d8b;
+        .avatar {
+          border: none;
+          color: #607d8b;
+        }
+      }
+    }
+  }
+}
+
+.header-drawer {
+  .brand-logo {
+    display: block;
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    border-bottom: 1px solid #001529;
+  }
+  .ant-drawer-body {
+    padding: 0;
+  }
+}
+
+.app-menu-btn,
+.account-menu-btn {
+  background: none;
+  color: #fff;
+  border: none;
+  svg {
+    stroke: #fff;
+    stroke-width: 20px;
+  }
+  &.app-menu-btn {
+    margin-right: 10px;
+  }
+}

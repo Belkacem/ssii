@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="invoice-html">
+<head>
+    <title th:text="'Facture - ' + ${number}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width" />
+    <style type="text/css">
+        html, body {
+            -webkit-print-color-adjust: exact;
+        }
+        html.invoice-html,
+        body.invoice-body {
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        @media print {
+            html,
+            body {
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            @page {
+                margin: 0;
+                size: A4 portrait;
+            }
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                box-shadow: initial;
+                overflow: hidden;
+                transform: inherit !important;
+                transform-origin: inherit !important;
+            }
+            .page {
+                page-break-after: always;
+            }
+            .page:last-child {
+                page-break-after: avoid;
+            }
+        }
+
+        .invoice {
+            position: relative;
+            box-sizing: border-box;
+            width: 21cm;
+            max-width: 21cm;
+            min-height: 29.6cm;
+            padding: 2cm;
+            margin: 0;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        .invoice, .invoice * {
+            box-sizing: border-box;
+        }
+
+        .invoice .company-info {
+            width: 40%;
+            float: left;
+            clear: left;
+        }
+
+        .invoice .company-info h4 {
+            font-weight: bold;
+        }
+
+        .invoice .client-info {
+            width: 40%;
+            float: right;
+            clear: right;
+        }
+
+        .invoice .clearfix {
+            clear: both;
+        }
+
+        .invoice .due-date {
+            margin: 1.5cm 0 1cm 0;
+        }
+
+        .invoice .info-table {
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1cm;
+            font-size: 11px;
+            border: 1px solid #2b2b2b;
+        }
+
+        .invoice .info-table th {
+            font-weight: bold;
+            background: #366092;
+            color: #ffffff;
+            padding: 4px;
+            border-bottom: 1px solid #2b2b2b;
+        }
+
+        .invoice .items-table {
+            font-size: 11px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .invoice .items-table .spacer {
+            height: 100px;
+            border-bottom: 4px solid #366092;
+        }
+
+        .invoice .items-table thead th,
+        .invoice .items-table thead td {
+            font-size: 9px;
+            font-weight: bold;
+            background: #366092;
+            color: #ffffff;
+            padding: 4px;
+        }
+
+        .invoice .items-table tbody {
+            font-size: 10px;
+        }
+
+        .invoice .items-table tbody td {
+            padding: 4px;
+            white-space: nowrap;
+            vertical-align: top;
+        }
+
+        .invoice .totals-table {
+            min-width: 200px;
+            float: right;
+            font-size: 11px;
+        }
+
+        .invoice .totals-table td,
+        .invoice .totals-table th {
+            padding: 4px 8px;
+            text-align: right;
+        }
+
+        .invoice .note {
+            margin-top: 2cm;
+        }
+
+        .invoice .footer {
+            font-size: 10px;
+            text-align: center;
+            border-top: 1px solid #2b2b2b;
+            line-height: 0.8cm;
+            margin-top: 2cm;
+        }
+    </style>
+</head>
+<body class="invoice-body">
+
+<div class="invoice">
+    <div>
+        <div class="company-info">
+            <img
+                th:if="${company.getLogo() != null}"
+                th:alt="${company.getName()}"
+                th:src="'data:'+${company.getLogoContentType()}+';base64, '+${companyLogo}"
+                style="height: 80px; margin-bottom: 16px"
+            />
+            <h4 th:text="${company.getName()} +' '+ ${company.getForm()}"></h4>
+            <div>
+                <div th:text="${company.getAddressLine1()}"></div>
+                <div th:text="${company.getAddressLine2()}"></div>
+                <div th:text="${company.getCity()} +' '+ ${company.getPostalCode()} +' '+ ${company.getCountry()}"></div>
+                <br/>
+                <div th:text="${company.getEmail()}"></div>
+                <div>SIREN: <span th:text="${company.getSiren()}"></span></div>
+                <div>TVA: <span th:text="${company.getTva()}"></span></div>
+            </div>
+        </div>
+        <div class="client-info">
+            <table class="info-table" cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <th colspan="2" th:if="${#strings.toString(invoice.getType())} == 'INVOICE'">Facture</th>
+                    <th colspan="2" th:if="${#strings.toString(invoice.getType())} == 'CREDIT_NOTE'">Facture d'avoire</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Facture N°</td>
+                    <td th:text="${number}"></td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td th:text="${#temporals.format(invoice.getIssueDate(), dateFormat)}"></td>
+                </tr>
+                <tr th:if="${!#strings.isEmpty(client.getReference())}">
+                    <td>Référence de fournisseur</td>
+                    <td th:text="${client.getReference()}"></td>
+                </tr>
+                <tr th:if="${projectResourceInfo != null && projectResourceInfo.isPresent() && !#strings.isEmpty(projectResourceInfo.get().getReference())}">
+                    <td>Référence de contrat</td>
+                    <td th:text="${projectResourceInfo.get().getReference()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <h4>Facturé à:</h4>
+                <div>
+                    <b th:text="${client.getName()} +' '+ ${client.getForm()}"></b>
+                    <br/>
+                    <b th:text="${client.getAddressLine1()}"></b>
+                    <br/>
+                    <b th:text="${client.getAddressLine2()}"></b>
+                    <br/>
+                    <b th:text="${client.getCity()} +' '+ ${client.getPostalCode()} +' '+ ${client.getCountry()}"></b>
+                    <br/>
+                    <b th:text="${client.getEmail()}"></b>
+                    <br/>
+                    <b>SIREN: <span th:text="${client.getSiren()}"></span></b>
+                    <br/>
+                    <b>TVA: <span th:text="${client.getTva()}"></span></b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="due-date">
+        <b>Date d'échéance de règlement</b> <span th:text="${#temporals.format(invoice.getDueDate(), dateFormat)}"></span>
+    </div>
+    <table class="items-table" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td>Date</td>
+            <td>Désignation</td>
+            <td th:if="${resource != null}">Consultant</td>
+            <td>Qté</td>
+            <td>% TVA</td>
+            <td>Prix unitaire (HT)</td>
+            <td>Prix unitaire (TTC)</td>
+            <td>Total (HT)</td>
+            <td>Total TVA</td>
+            <td>Total (TTC)</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item: ${invoiceItems}" th:with="unitPrice=(${item.getUnitPrice()}),tax=(${item.getTax()}), qty=(${item.getQuantity()})">
+            <td th:text="${#temporals.format(item.getDate(), dateFormat)}"></td>
+            <td style="white-space: inherit">
+                <span th:text="${item.getName()}"></span>
+                <div th:if="${item.getDescription() != null}">
+                    <small th:text="${item.getDescription()}"></small>
+                </div>
+            </td>
+            <td th:if="${resource != null}" th:text="${resource.getFirstName()} + ' ' + ${resource.getLastName()}"></td>
+            <td th:text="${#numbers.formatDecimal(qty, 1, 'NONE', (qty % 1 == 0 ? 0 : 2), 'COMMA')}"></td>
+            <td th:text="${#numbers.formatDecimal(tax, 1, 'NONE', (tax % 1 == 0 ? 0 : 2), 'COMMA')} + ' %'"></td>
+            <td><span th:text="${#numbers.formatDecimal(unitPrice, 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+            <td><span th:text="${#numbers.formatDecimal((unitPrice + (unitPrice * tax) / 100), 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+            <td><span th:text="${#numbers.formatDecimal((unitPrice * qty), 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+            <td><span th:text="${#numbers.formatDecimal((((unitPrice * qty) * tax) / 100), 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+            <td><span th:text="${#numbers.formatDecimal((unitPrice * qty) + (((unitPrice * qty) * tax) / 100), 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+        </tr>
+        <tr>
+            <td class="spacer" colspan="15"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="clearfix"></div>
+    <table class="totals-table" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+            <th>Total Ht</th>
+            <td><span th:text="${#numbers.formatDecimal(totalHt, 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+        </tr>
+        <tr>
+            <th>TVA</th>
+            <td><span th:text="${#numbers.formatDecimal(totalTVA, 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</td>
+        </tr>
+        <tr>
+            <th>Total TTC</th>
+            <td>
+                <b><span th:text="${#numbers.formatDecimal((totalHt + totalTVA), 1, 'WHITESPACE', 2, 'COMMA')}"></span> €</b>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="clearfix"></div>
+    <div class="note">
+        <small>Taux des pénalités exigibles en l'absence de paiement : 12 %</small>
+        <br/>
+        <small>Indemnité forfaitaire pour frais de recouvrement en cas de retard de paiement : 40 €</small>
+        <br/>
+        <div th:if="${company.getIban() != null && !company.getIban().isEmpty()}">
+            <b>Coordonnées bancaires:</b>
+            <br/>
+            Titulaire du compte: <span th:text="${company.getName()} +' '+ ${company.getForm()}"></span>
+            <br/>
+            <span th:text="'RIB :' + ${rib}"></span>
+            <br/>
+            <span th:text="'IBAN :' + ${iban}"></span>
+            <br/>
+            <span th:if="${company.getBic() != null}" th:text="'BIC : ' + ${company.getBic()}"></span>
+        </div>
+    </div>
+    <div class="footer">
+        <span th:text="${company.getForm()} +' '+ ${company.getName()}"></span>
+        <span th:if="${company.getCapital() != null}" th:text="'au capital social de ' + ${#numbers.formatDecimal(company.getCapital(), 1, 'WHITESPACE', 0, 'COMMA')} + ' €'"></span>
+        <span th:if="${company.getSiren() != null}" th:text="',RCS ' + ${company.getCity()} +' '+ ${#numbers.formatInteger(company.getSiren(), 3, 'WHITESPACE')}"></span>
+    </div>
+</div>
+</body>
+</html>

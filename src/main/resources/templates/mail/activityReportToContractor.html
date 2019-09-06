@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mail/fragments :: page-head(#{email.activityReportToContractor.title})"></head>
+<body style="margin: 0; padding: 0; text-align: center;" bgcolor="#ffffff">
+<style type="text/css">
+    .email-info-table {
+        font-size: 12px;
+        width: 80%;
+        margin: 0 auto;
+        border: 4px solid #607D8B;
+        padding: 10px;
+        color: #263238;
+    }
+    .email-info-table th{
+        background: #CFD8DC;
+        width: 30%;
+        text-align: left;
+        padding-left: 10px;
+    }
+    .email-info-table td{
+        background: #ECEFF1;
+        width: 70%;
+        text-align: left;
+        padding-left: 10px;
+    }
+</style>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Helvetica, Arial, sans-serif;">
+    <tbody>
+    <tr th:replace="mail/fragments :: table-header"></tr>
+    <tr>
+        <td style="line-height: 28px;">
+            <p th:text="#{email.activityReportToContractor.greeting(${project_contractor.getFullname()})}"></p>
+            <p th:text="#{email.activityReportToContractor.text1}"></p>
+
+
+            <table width="100%" border="0" cellpadding="0" cellspacing="1" class="email-info-table">
+                <tr>
+                    <th th:text="#{email.activityReportToContractor.project}">Project</th>
+                    <td th:text="${project.nom}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{email.activityReportToContractor.month}">Month</th>
+                    <td th:text="${month}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{email.activityReportToContractor.resource}">Resource</th>
+                    <td th:text="${resource.getFirstName()} + ' ' + ${resource.getLastName()}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{email.activityReportToContractor.validationStatus}">Validation Status</th>
+                    <td th:switch="${validation_status.name()}">
+                        <span th:case="'APPROVED'" th:text="#{email.activityReportToContractor.approved}"></span>
+                        <span th:case="'REJECTED'" th:text="#{email.activityReportToContractor.rejected}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{email.activityReportToContractor.Validator}">Validator</th>
+                    <td th:text="${project_validator.getFullname()}"></td>
+                </tr>
+                <tr th:if="${!#strings.isEmpty(activity_report.getComment())}">
+                    <th th:text="#{email.activityReportToContractor.comment}">Comment</th>
+                    <td th:text="${activity_report.getComment()}"></td>
+                </tr>
+            </table>
+
+            <p>
+                <a th:href="${link}" th:text="#{email.activityReportToContractor.button}" style="margin-bottom: 15px;display: inline-block;font-size: 18px;font-weight: bold;color: #ffffff;text-decoration: none;background-color: #f8005f;padding: 10px 20px;border-radius: 5px;border-bottom: 2px solid #880E4F;">
+                    Accéder au Rapport
+                </a>
+                <br/>
+                <span th:text="#{email.template.copylink}" style="color: #455A64;font-size: 12px;">OR Copy - Paste the link</span>
+                <br/>
+                <a th:href="${link}" th:text="${link}" style="font-size: 12px;"></a>
+            </p>
+            <p>
+                <span th:text="#{email.activityReportToContractor.signuature}">Regards, </span>
+            </p>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:replace="mail/fragments :: table-footer"></tfoot>
+</table>
+</body>
+</html>

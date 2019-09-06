@@ -1,0 +1,9 @@
+zs_type;code;has_balance
+Congé payé (CP);1;true
+Réduction du temps de travail (RTT);2;true
+Sans Solde;3;false
+Maladie;4;false
+Maternité;5;false
+Paternité;6;false
+Autre;99;false
+Intercontrat;100;false

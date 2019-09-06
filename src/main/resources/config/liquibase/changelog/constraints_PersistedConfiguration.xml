@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity PersistedConfiguration.
+    -->
+    <changeSet id="201906120912350-1" author="Bessem Zitouni">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="persisted_configuration" columnName="id"/>
+            <columnExists tableName="persisted_configuration" columnName="zs_key"/>
+            <columnExists tableName="persisted_configuration" columnName="user_id"/>
+        </preConditions>
+        <sql>
+            DELETE pc1
+            FROM persisted_configuration pc1, persisted_configuration pc2
+            WHERE
+            pc1.id > pc2.id
+            AND pc1.zs_key = pc2.zs_key
+            AND pc1.user_id = pc2.user_id;
+        </sql>
+        <addUniqueConstraint
+            tableName="persisted_configuration"
+            columnNames="zs_key, user_id"
+            constraintName="persisted_configuration_unique_key"
+        />
+    </changeSet>
+</databaseChangeLog>

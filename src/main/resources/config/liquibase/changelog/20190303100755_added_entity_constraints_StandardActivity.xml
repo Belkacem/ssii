@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity StandardActivity.
+    -->
+    <changeSet id="20190303100755-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="activity_report_id"
+                                 baseTableName="standard_activity"
+                                 constraintName="fk_standard_activity_activity_report_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="activity_report"/>
+
+        <addForeignKeyConstraint baseColumnNames="validator_id"
+                                 baseTableName="standard_activity"
+                                 constraintName="fk_standard_activity_validator_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project_validator"/>
+
+    </changeSet>
+</databaseChangeLog>

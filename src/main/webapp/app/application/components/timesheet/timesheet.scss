@@ -1,0 +1,750 @@
+:root {
+  --cell-width: 28px;
+  --cell-height: 28px;
+
+  --timesheet-border-color: #f5f5f5;
+  --timesheet-print-border-color: #343a40;
+
+  --cell-normal: rgba(0, 0, 0, 0.04);
+  --cell-error: rgba(219, 0, 10, 0.3);
+  --cell-disabled: #e2dedf;
+  --cell-hover: rgba(253, 3, 244, 0.1);
+  --cell-selection: rgba(0, 0, 0, 0.2);
+  --cell-holiday: rgba(255, 235, 59, 0.2);
+  --cell-weekend: rgba(3, 169, 244, 0.2);
+  --cell-selected: rgba(255, 185, 0, 0.5);
+  --cell-approved: rgba(10, 111, 15, 0.5);
+  --cell-rejected: rgba(244, 67, 54, 0.5);
+}
+
+.timesheet-table-wrap {
+  overflow: auto;
+  overflow-scrolling: touch;
+  max-width: 100%;
+  .timesheet-table {
+    width: 100%;
+    margin-bottom: 10px;
+    user-select: none;
+    &.timesheet-table-bordered {
+      border: 1px solid var(--timesheet-border-color);
+      tr {
+        border-bottom: 1px solid var(--timesheet-border-color);
+        td,
+        th {
+          border-right: 1px solid var(--timesheet-border-color);
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+      tbody {
+        tr:last-child {
+          border: none;
+        }
+      }
+    }
+    .timesheet-head {
+      th {
+        > div {
+          font-size: 12px;
+          text-align: center;
+          height: 40px;
+          line-height: 40px;
+          text-transform: uppercase;
+          min-width: var(--cell-width);
+          max-width: 134px;
+          color: rgba(0, 0, 0, 0.65);
+          &.table-cell-title {
+            text-align: left;
+            padding: 0 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          &.table-cell-activity {
+            line-height: inherit;
+            width: var(--cell-width);
+            overflow: hidden;
+          }
+          &.weekend {
+            background-color: var(--cell-weekend);
+            cursor: pointer;
+            &.closed {
+              width: 4px;
+              min-width: 4px;
+              * {
+                display: none;
+              }
+            }
+          }
+          &.holiday {
+            background-color: var(--cell-holiday);
+          }
+          &.disabled {
+            color: rgba(0, 0, 0, 0.25);
+          }
+          &.disabled:not(.weekend):not(.holiday) {
+            background: var(--cell-disabled);
+          }
+        }
+      }
+    }
+    .timesheet-row {
+      height: var(--cell-height);
+      background: #ffffff;
+      overflow: hidden;
+      td,
+      th {
+        line-height: var(--cell-height);
+        font-size: 11px;
+        text-align: center;
+        width: 100%;
+        height: inherit;
+      }
+      th {
+        color: #666;
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: capitalize;
+        &:first-child {
+          padding-right: 10px;
+          padding-left: 5px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          text-align: left;
+        }
+      }
+      &:hover {
+        td,
+        th {
+          background-color: var(--cell-hover);
+        }
+      }
+      .day {
+        position: relative;
+        width: var(--cell-width);
+        touch-action: none;
+        .na {
+          width: var(--cell-width);
+          height: var(--cell-height);
+          float: left;
+          position: relative;
+          color: #666;
+          .timeslot {
+            width: calc(var(--cell-width) / 2);
+            height: var(--cell-height);
+            float: left;
+            cursor: inherit;
+            position: relative;
+            pointer-events: none;
+            &.timeslot-editable,
+            &.timeslot-selected,
+            &.timeslot-disabled {
+              pointer-events: all;
+              background-color: var(--cell-normal);
+            }
+            &.timeslot-editable {
+              cursor: pointer;
+            }
+            &.timeslot-disabled {
+              background-color: var(--cell-disabled);
+            }
+            &.timeslot-selected {
+              background-color: var(--cell-selected);
+            }
+            &.timeslot-approved {
+              background-color: var(--cell-approved);
+            }
+            &.timeslot-rejected {
+              background-color: var(--cell-rejected);
+            }
+            &.timeslot-error {
+              background-color: var(--cell-error);
+            }
+            &.selection,
+            &:hover {
+              &:after {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: var(--cell-hover);
+              }
+              &.selection:after {
+                background-color: var(--cell-selection);
+              }
+            }
+            .timeslot-border {
+              position: absolute;
+              border-top: 1px solid rgba(53, 57, 60, 0.5);
+              width: 100%;
+              height: 4px;
+              bottom: 0;
+              left: 0;
+              z-index: 1;
+            }
+          }
+          .day-text {
+            position: absolute;
+            display: block;
+            width: var(--cell-width);
+            height: var(--cell-height);
+            top: 0;
+            left: 0;
+            text-align: center;
+            z-index: 2;
+            pointer-events: none;
+            &.hide {
+              display: none;
+            }
+          }
+          .timeslot-disabled + .timeslot-disabled + .day-text {
+            color: rgba(58, 58, 58, 0.27);
+          }
+          .timeslot-error + .timeslot-error + .day-text {
+            color: #ff0000;
+          }
+          .anticon-loading {
+            font-size: 14px !important;
+          }
+        }
+        &.weekend {
+          width: 4px;
+          .na {
+            background-color: var(--cell-weekend);
+            cursor: pointer;
+          }
+          &.closed {
+            .na {
+              width: 4px;
+              .timeslot,
+              .day-text {
+                display: none;
+              }
+            }
+          }
+        }
+        &.holiday {
+          .na {
+            background-color: var(--cell-holiday);
+            .timeslot {
+              display: none;
+            }
+          }
+        }
+      }
+      &.timesheet-row-validate {
+        .day {
+          .na {
+            .timeslot {
+              pointer-events: none;
+              &.timeslot-selected {
+                pointer-events: all;
+              }
+            }
+          }
+        }
+      }
+    }
+    .timesheet-foot {
+    }
+    .actions-cell {
+      display: flex;
+      .ant-btn {
+        flex: 1 1 auto;
+        display: inline-block;
+        border: none;
+        padding: 0 4px;
+        border-radius: 0;
+        font-size: 13px;
+        height: calc(var(--cell-height) - 4px);
+        line-height: calc(var(--cell-height) - 4px);
+        margin: 2px;
+      }
+    }
+    .horizontal-display {
+      display: initial;
+    }
+    .vertical-display {
+      display: none;
+    }
+  }
+  .table-cell-activity-action {
+    display: none;
+  }
+  &.has-actions {
+    .table-cell-activity-action {
+      display: block;
+    }
+  }
+}
+
+.timesheet-legend {
+  user-select: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
+  .legend-title {
+    font-weight: normal;
+    font-size: 9px;
+    color: #717880;
+    align-self: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+  .legend-item {
+    font-weight: normal;
+    font-size: 10px;
+    color: var(--timesheet-print-border-color);
+    min-width: 60px;
+    span {
+      width: 16px;
+      height: 12px;
+      display: inline-block;
+      box-shadow: 0 0 0 1px var(--timesheet-print-border-color), inset 0 0 0 1px #fff, inset 0 0 0 2px #adadad;
+      margin: 0.5rem;
+      vertical-align: middle;
+      &.freeday {
+        background: var(--cell-normal);
+      }
+      &.pending {
+        background: var(--cell-selected);
+      }
+      &.weekend {
+        background: var(--cell-weekend);
+      }
+      &.holiday {
+        background: var(--cell-holiday);
+      }
+      &.approved {
+        background: var(--cell-approved);
+      }
+      &.rejected {
+        background: var(--cell-rejected);
+      }
+      &.disabled {
+        background: var(--cell-disabled);
+      }
+    }
+    &:hover {
+      span {
+        box-shadow: 0 0 0 1px var(--timesheet-print-border-color);
+      }
+    }
+    &.legened-border {
+      span {
+        border-bottom: 4px solid transparent;
+        box-shadow: 0 0 0 1px var(--timesheet-print-border-color);
+      }
+    }
+  }
+}
+
+.activities-result {
+  user-select: none;
+  text-align: center;
+  background: #39a4a1;
+  background: linear-gradient(135deg, #64cbaa 0%, #39a4a1 50%);
+  color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  &.has-error {
+    background: #ad1457;
+    background: linear-gradient(135deg, #f06292 0%, #ad1457 50%);
+  }
+  .item {
+    padding: 16px 8px;
+    font-size: 28px;
+    line-height: 16px;
+    .title {
+      font-size: 14px;
+    }
+    .days {
+      display: block;
+      font-weight: bold;
+      line-height: 48px;
+      sup {
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+  }
+  .item-divider {
+    height: 68px;
+    background: #fff;
+    width: 1px;
+  }
+  &.mini {
+    border-top: 1px solid white;
+    .item {
+      padding: 10px 8px;
+      font-size: 18px;
+      .days {
+        line-height: 17px;
+        sup {
+          vertical-align: sub;
+        }
+        sup:first-child {
+          margin-right: 5px;
+        }
+        sup:last-child {
+          margin-left: 5px;
+        }
+      }
+    }
+    .item-divider {
+      height: 22px;
+    }
+  }
+}
+
+.timesheet-table-wrap.vertical-mode {
+  .timesheet-table {
+    display: flex;
+    margin: auto;
+    width: max-content;
+    thead,
+    tbody {
+      display: inline-block;
+      vertical-align: top;
+      flex: 1 1 auto;
+    }
+    td,
+    th {
+      display: block;
+      touch-action: initial !important;
+      max-height: var(--cell-height);
+    }
+    tr {
+      display: inline-table;
+    }
+    &.timesheet-table-bordered {
+      tr {
+        display: inline-table;
+        border-right: 1px solid var(--timesheet-border-color);
+        border-bottom: none;
+        td,
+        th {
+          border-bottom: 1px solid var(--timesheet-border-color);
+          border-right: none;
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+    }
+    tbody {
+      display: flex;
+      max-width: max-content;
+      tr.timesheet-row {
+        flex: 1 1 100%;
+        td,
+        th {
+          width: 100px;
+          min-width: var(--cell-height);
+          overflow: hidden;
+          padding: 0;
+          height: initial;
+        }
+        td {
+          max-height: var(--cell-height);
+          min-height: var(--cell-height);
+          &.day {
+            width: 100%;
+            .na {
+              float: none;
+              display: inline-block;
+              width: 100%;
+              .timeslot {
+                width: 100%;
+                height: 50%;
+              }
+              .day-text {
+                width: 100%;
+              }
+            }
+            &.weekend {
+              width: auto;
+              min-height: inherit;
+              &.closed {
+                line-height: 0;
+                .na {
+                  width: 100%;
+                  height: 4px;
+                }
+              }
+            }
+          }
+        }
+        th:first-child {
+          font-weight: bold;
+          text-align: center;
+          height: var(--cell-height);
+          padding: 0 5px;
+          display: inline-block;
+        }
+        .actions-cell {
+          display: flex;
+          min-height: var(--cell-height);
+          .ant-btn {
+            flex: 1 1 auto;
+          }
+        }
+      }
+    }
+    .timesheet-head {
+      margin-right: 1px;
+      tr {
+        width: 100%;
+      }
+      th {
+        min-width: 134px;
+        &:nth-child(2) {
+          min-height: var(--cell-height);
+        }
+        > div {
+          overflow: hidden;
+          height: var(--cell-height);
+          line-height: var(--cell-height) !important;
+          max-height: var(--cell-height);
+          max-width: inherit;
+          width: inherit !important;
+          text-align: left;
+          padding-right: 10px;
+          padding-left: 5px;
+          &.weekend {
+            &.closed {
+              min-width: 4px;
+              width: var(--cell-height);
+              min-height: auto;
+              height: 4px;
+              * {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      th:first-child {
+        height: var(--cell-height);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        > div {
+          flex: 1 1 auto;
+          text-align: center;
+        }
+      }
+    }
+    .horizontal-display {
+      display: none;
+    }
+    .vertical-display {
+      display: initial;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .timesheet-table-wrap.vertical-mode {
+    .timesheet-table {
+      width: 100%;
+      tbody {
+        tr.timesheet-row {
+          flex: 1 1 auto;
+          td,
+          th {
+            min-width: var(--cell-height);
+            max-width: var(--cell-height);
+            overflow: hidden;
+            padding: 0;
+            height: initial;
+          }
+          th:first-child {
+            height: 134px;
+            max-height: 134px;
+            padding: 5px 0 10px 0;
+            writing-mode: vertical-rl;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+        }
+      }
+      .timesheet-head {
+        th:first-child {
+          height: 134px;
+          max-height: 134px;
+        }
+      }
+    }
+  }
+}
+
+/* SHOW BUTTON TITLES ON LARGE SCREEN */
+@media (min-width: 1200px) {
+  .timesheet-table-wrap {
+    .ant-radio-button-wrapper > span > span,
+    .ant-btn {
+      &:after {
+        content: attr(title);
+        display: inline-block;
+        font-size: 11px;
+        margin-left: 5px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.exceptional-activities-list {
+  min-height: 220px;
+  border-top: 1px solid #d9d9d9;
+  .ant-list-item.exception-activity {
+    user-select: none;
+    padding: 0;
+    .ant-list-item-content {
+      align-items: center;
+      justify-content: space-between;
+    }
+    .exception-activity-content {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      .exception-activity-hours {
+        display: flex;
+        background: #eceff1;
+        color: #455a64;
+        padding: 4px 8px;
+        min-width: 50px;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: center;
+        span {
+          font-weight: bolder;
+          font-size: 22px;
+          line-height: 20px;
+        }
+        small {
+          display: block;
+          font-size: 9px;
+          font-weight: normal;
+          text-transform: uppercase;
+        }
+      }
+      .exception-activity-description {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 4px 0 4px 8px;
+        b {
+          line-height: 22px;
+          * {
+            display: inline-block;
+          }
+          i {
+            font-weight: normal;
+            font-size: 12px;
+            margin: 0 10px;
+          }
+        }
+        small {
+          display: block;
+          color: #9e9e9e;
+        }
+      }
+    }
+    .exception-activity-actions {
+      padding: 4px 5px;
+      min-width: 84px;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    border-left: 4px solid var(--cell-selected);
+    &.approved {
+      border-left-color: var(--cell-approved);
+    }
+    &.rejected {
+      border-left-color: var(--cell-rejected);
+    }
+  }
+}
+
+.page {
+  .timesheet-table-wrap table.timesheet-table,
+  table.additional-hours-table {
+    border: 2px solid var(--timesheet-print-border-color);
+    tr {
+      border-bottom: 1px solid var(--timesheet-print-border-color);
+      td,
+      th {
+        border-right: 1px solid var(--timesheet-print-border-color);
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+    tbody {
+      tr:last-child {
+        border: none;
+      }
+    }
+  }
+
+  .timesheet-table-wrap .timesheet-table {
+    * {
+      pointer-events: none !important;
+    }
+    tr:hover {
+      td,
+      th {
+        background-color: inherit !important;
+      }
+    }
+    .timeslot:after {
+      display: none !important;
+    }
+    tr {
+      .actions-cell,
+      th:nth-child(2) {
+        display: none;
+        width: 0;
+        * {
+          display: none;
+        }
+      }
+    }
+    .timesheet-head th > div.table-cell-activity {
+      line-height: 14px;
+      padding: 5px 0;
+    }
+  }
+
+  .timesheet-legend .legend-item span {
+    box-shadow: 0 0 0 1px var(--timesheet-print-border-color) !important;
+  }
+
+  .additional-hours-table {
+    width: 100%;
+    tr {
+      td,
+      th {
+        padding: 5px;
+        font-size: 11px;
+        height: var(--cell-height);
+        width: 25%;
+      }
+    }
+  }
+}

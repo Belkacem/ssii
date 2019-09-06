@@ -1,0 +1,8 @@
+${AnsiColor.BLUE}$$$$$$$$\ ${AnsiColor.WHITE} $$$$$$\   $$$$$$\  $$$$$$$$\ $$$$$$$$\
+${AnsiColor.BLUE}\____$$  |${AnsiColor.WHITE}$$  __$$\ $$  __$$\ $$  _____|\__$$  __|
+${AnsiColor.BLUE}    $$  / ${AnsiColor.WHITE}$$ /  \__|$$ /  $$ |$$ |         $$ |
+${AnsiColor.BLUE}   $$  /  ${AnsiColor.WHITE}\$$$$$$\  $$ |  $$ |$$$$$\       $$ |
+${AnsiColor.BLUE}  $$  /   ${AnsiColor.WHITE} \____$$\ $$ |  $$ |$$  __|      $$ |
+${AnsiColor.BLUE} $$  /    ${AnsiColor.WHITE}$$\   $$ |$$ |  $$ |$$ |         $$ |
+${AnsiColor.BLUE}$$$$$$$$\ ${AnsiColor.WHITE}\$$$$$$  | $$$$$$  |$$ |         $$ |
+${AnsiColor.BLUE}\________|${AnsiColor.WHITE} \______/  \______/ \__|         \__|

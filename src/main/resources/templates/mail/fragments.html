@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="page-head (pageTitle)">
+    <title th:text="${pageTitle}">ZSoft-Consulting</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<table>
+    <tbody>
+    <tr th:fragment="table-header">
+        <td align="center"
+            style="padding: 40px 0; font-size: 36px; font-weight: 200; color: #FAFAFA; background: #3c0037;">
+            <b th:text="#{email.template.app.company}">ZSOFT</b> <span th:text="#{email.template.app.name}">SSII</span>
+            <sup
+                style="font-size: 14px;background: #E91E63;padding: 4px 8px;border-radius: 51px;top: -10px;position: relative;font-weight: bold;"
+                th:text="#{email.template.app.version}">beta</sup>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:fragment="table-footer">
+    <tr>
+        <td style="font-size: 12px;color: #455A64;padding: 14px;background: #ECEFF1;"
+            th:text="#{email.template.footer}">
+            Ceci est un message automatisé s'il vous plaît ne répondez pas
+        </td>
+    </tr>
+    <tr>
+        <td style="font-size: 12px;font-weight: bold;color: #fafafa;padding: 14px;background: #E91E63;"
+            th:text="#{email.template.app.copyright}">
+            &copy; ZSoft 2019
+        </td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>

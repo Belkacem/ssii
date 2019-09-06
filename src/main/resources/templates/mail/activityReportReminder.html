@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mail/fragments :: page-head(#{email.activityReportReminder.title})"></head>
+<body style="margin: 0; padding: 0; text-align: center;" bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Helvetica, Arial, sans-serif;">
+    <tbody>
+    <tr th:replace="mail/fragments :: table-header"></tr>
+    <tr>
+        <td style="line-height: 28px;">
+            <p th:text="#{email.activityReportReminder.greeting(${resource.getLastName()})}"></p>
+            <p th:text="#{email.activityReportReminder.text1(${month})}"></p>
+            <p th:text="#{email.activityReportReminder.text2(${projects})}"></p>
+            <p>
+                <a th:href="${link}" th:text="#{email.activityReportReminder.button}" style="margin-bottom: 15px;display: inline-block;font-size: 18px;font-weight: bold;color: #ffffff;text-decoration: none;background-color: #f8005f;padding: 10px 20px;border-radius: 5px;border-bottom: 2px solid #880E4F;">
+                    Accéder au Rapport
+                </a>
+            </p>
+            <p>
+                <span th:text="#{email.activityReportReminder.signuature}">Regards, </span>
+            </p>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:replace="mail/fragments :: table-footer"></tfoot>
+</table>
+</body>
+</html>

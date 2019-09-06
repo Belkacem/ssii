@@ -1,0 +1,56 @@
+.app-loading {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 10em;
+}
+
+.app-loading > div {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1090;
+  top: 0;
+  left: 0;
+  background-color: #001529;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-loading > div > div {
+  position: relative;
+  margin: auto;
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='437.87px' height='581.598px' viewBox='0 0 437.87 581.598' fill='%23ffffff'%3E%3Cpolygon points='46.43,0 437.87,0 229.938,362.594 261.996,156.977 46.43,155.871 '/%3E%3Cpolygon points='391.44,581.598 0,581.598 207.933,219.005 175.874,424.622 391.44,425.727 '/%3E%3C/svg%3E");
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  animation: ripple 1000ms infinite linear;
+}
+
+.app-loading > div:after {
+  content: 'ZSoft Consulting © copyright 2019';
+  position: absolute;
+  bottom: 0.5rem;
+  color: #fff;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1), 0 0 0 5em rgba(255, 255, 255, 0.08), 0 0 0 10em rgba(255, 255, 255, 0.06),
+      0 0 0 15em rgba(255, 255, 255, 0.04);
+  }
+  100% {
+    box-shadow: 0 0 0 5em rgba(255, 255, 255, 0.08), 0 0 0 10em rgba(255, 255, 255, 0.06), 0 0 0 15em rgba(255, 255, 255, 0.04),
+      0 0 0 20em rgba(255, 255, 255, 0);
+  }
+}

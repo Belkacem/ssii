@@ -1,0 +1,66 @@
+<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .logo {
+        fill: white;
+        }
+
+        .background{
+        fill: rgb(21, 108, 156);
+        }
+
+        .loading {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        transform-origin: center;
+        animation: dash 1.5s ease-in-out infinite,
+        rotate 2s linear infinite,
+        color 6s ease-in-out infinite;
+        stroke-linecap: round;
+        }
+
+        @keyframes rotate {
+        100% {
+        transform: rotate(360deg);
+        }
+        }
+
+        @keyframes dash {
+        0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        }
+        50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -135;
+        }
+        100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -195;
+        }
+        }
+
+        @keyframes color {
+        100%, 0% {
+        stroke: #d62d20;
+        }
+        40% {
+        stroke: #0057e7;
+        }
+        66% {
+        stroke: #008744;
+        }
+        80%, 90% {
+        stroke: #ffa700;
+        }
+        }
+    </style>
+    <g>
+        <circle class="background" cx="30" cy="30" r="25"/>
+        <circle stroke="#000000" class="loading" cx="30" cy="30" r="28" fill="none" stroke-width="2"
+                stroke-miterlimit="10"/>
+        <g class="logo">
+            <polygon id="svg_5" points="21.679466247558594,15.973722457885742 40.560020446777344,15.973722457885742 30.53070831298828,33.46292686462402 32.076988220214844,23.5452938079834 21.679466247558594,23.491933822631836 "/>
+            <polygon id="svg_6" points="38.320533752441406,44.02627754211426 19.439979553222656,44.02627754211426 29.469337463378906,26.5371150970459 27.923011779785156,36.454763412475586 38.320533752441406,36.5080623626709 "/>
+        </g>
+    </g>
+</svg>

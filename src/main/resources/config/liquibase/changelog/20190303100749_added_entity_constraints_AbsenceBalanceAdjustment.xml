@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AbsenceBalanceAdjustment.
+    -->
+    <changeSet id="20190303100749-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="absence_balance_id"
+                                 baseTableName="absence_balance_adjustment"
+                                 constraintName="fk_absence_balance_adjustment_absence_balance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="absence_balance"/>
+
+        <addForeignKeyConstraint baseColumnNames="absence_id"
+                                 baseTableName="absence_balance_adjustment"
+                                 constraintName="fk_absence_balance_adjustment_absence_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="absence"/>
+
+    </changeSet>
+</databaseChangeLog>

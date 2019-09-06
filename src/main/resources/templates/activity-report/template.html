@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="activity-report-html">
+<head>
+    <title th:text="'Rapport d\'activité - ' + ${#temporals.format(activityReport.month, 'dd/MM/yyyy')}"></title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width" name="viewport"/>
+    <style type="text/css">
+        html, body {
+            -webkit-print-color-adjust: exact;
+        }
+        html.activity-report-html,
+        body.activity-report-body {
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+            html,
+            body {
+              height: 100%;
+              margin: 0 !important;
+              padding: 0 !important;
+            }
+            @page {
+              margin: 0;
+              size: A4 landscape;
+            }
+            .page {
+              margin: 0;
+              border: initial;
+              border-radius: initial;
+              box-shadow: initial;
+              overflow: hidden;
+              transform: inherit !important;
+              transform-origin: inherit !important;
+            }
+            .page {
+              page-break-after: always;
+            }
+            .page:last-child {
+              page-break-after: avoid;
+            }
+        }
+
+        .timesheet-table-printable {
+            width: 29.6cm;
+            max-width: 29.6cm;
+            min-height: 21cm;
+            padding: 0.5cm;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            position: relative;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .standard-days-table{
+            width: 100%;
+        }
+
+        .standard-days-table {
+            border: 2px solid #343a40;
+            border-collapse: collapse;
+        }
+
+        table.standard-days-table tr td,
+        table.standard-days-table tr th,
+        table.additional-hours-table tr td,
+        table.additional-hours-table tr th {
+            border-right: 1px solid #343a40;
+            border-bottom: 1px solid #343a40;
+        }
+
+        table.standard-days-table tr td:last-child,
+        table.standard-days-table tr th:last-child,
+        table.additional-hours-table tr td:last-child,
+        table.additional-hours-table tr th:last-child {
+            border-right: none;
+        }
+
+        .standard-days-table thead th > div {
+            font-size: 12px;
+            text-align: center;
+            text-transform: uppercase;
+            min-width: 26px;
+            max-width: 134px;
+        }
+
+        .standard-days-table thead th > div.table-cell-title {
+            text-align: left;
+            padding: 0 0 0 4px;
+        }
+
+        .standard-days-table thead th > div.table-cell-activity {
+            line-height: inherit;
+            width: 26px;
+            overflow: hidden;
+        }
+
+        .standard-days-table thead th > div.holiday {
+            background-color: #fffad8;
+        }
+
+        .standard-days-table thead th > div.weekend {
+            background-color: #cdeefd;
+        }
+
+        .standard-days-table tbody tr {
+            height: 26px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .standard-days-table tbody tr td,
+        .standard-days-table tbody tr th {
+            line-height: 26px;
+            font-size: 11px;
+            text-align: center;
+            width: 100%;
+            height: inherit;
+        }
+
+        .standard-days-table tbody tr th {
+            color: #666;
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: capitalize;
+        }
+
+        .standard-days-table tbody tr th:first-child {
+            padding-right: 10px;
+            padding-left: 5px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .standard-days-table tbody tr .day .na {
+            width: 26px;
+            height: 26px;
+            color: #666;
+        }
+
+        .standard-days-table tbody tr .day.weekend .na {
+            background-color: #cdeefd;
+        }
+
+        .standard-days-table tbody tr .day.weekend.closed .na {
+            width: 4px;
+        }
+
+        .standard-days-table tbody tr .day.holiday .na {
+            background-color: #fffad8;
+        }
+
+        .standard-days-table thead th > div.table-cell-activity {
+            line-height: 14px;
+            padding: 5px 0;
+        }
+
+        .additional-hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #343a40;
+        }
+
+        .additional-hours-table tr td,
+        .additional-hours-table tr th {
+            padding: 5px;
+            font-size: 11px;
+            height: 26px;
+            width: 25%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="activity-report-body">
+<div class="timesheet-table-printable">
+    <div>
+        <h2>
+            Rapport d'activité
+        </h2>
+        <div>
+            <b>
+                Ressource :
+            </b>
+            <span th:text="${resource.getFirstName() + ' ' + resource.getLastName()}"></span>
+        </div>
+        <div>
+            <div>
+                <b>
+                    Projet :
+                </b>
+                <span th:text="${project.getNom()}"></span>
+            </div>
+        </div>
+        <div>
+            <b>
+                Date :
+            </b>
+            <span th:text="${#temporals.format(activityReport.month, 'MMMM yyyy')}"></span>
+        </div>
+        <!-- STANDARD ACTIVITIES -->
+        <div style="padding-top: 0.5cm;">
+            <table cellpadding="0" cellspacing="0" class="standard-days-table">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="table-cell-title">Projet</div>
+                        </th>
+                        <th th:each="date: ${dates}">
+                            <div
+                                class="table-cell-activity"
+                                th:classappend="|${T(com.zsoft.service.extensions.util.ActivityReportUtil).isWeekend(date) ? 'weekend' : ''} ${T(com.zsoft.service.extensions.util.ActivityReportUtil).isHoliday(date, holidays) ? 'holiday' : ''}|"
+                            >
+                                <div>
+                                    <div>
+                                        <small th:with="day = ${#temporals.format(date, 'EE')}"
+                                               th:text="${#strings.substring(day, 0, 2)}"></small>
+                                    </div>
+                                    <b th:text="${#temporals.format(date, 'dd')}"></b>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell-activity-total">
+                                <span class="horizontal-display">
+                                    ∑
+                                </span>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th th:text="${project.getNom()}"></th>
+                        <td
+                            class="day"
+                            th:classappend="|${T(com.zsoft.service.extensions.util.ActivityReportUtil).isWeekend(date) ? 'weekend' : ''} ${T(com.zsoft.service.extensions.util.ActivityReportUtil).isHoliday(date, holidays) ? 'holiday' : ''}|"
+                            th:each="date: ${dates}"
+                        >
+                            <div class="na">
+                                        <span
+                                            class="day-text"
+                                            th:text="${T(com.zsoft.service.extensions.util.ActivityReportUtil).getActivityTotal(standardActivities, date)}"
+                                        ></span>
+                            </div>
+                        </td>
+                        <th
+                            class="day-text"
+                            th:text="${T(com.zsoft.service.extensions.util.ActivityReportUtil).getActivityTotal(standardActivities)}"
+                        ></th>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td
+                            class="day"
+                            th:classappend="|${T(com.zsoft.service.extensions.util.ActivityReportUtil).isWeekend(date) ? 'weekend' : ''} ${T(com.zsoft.service.extensions.util.ActivityReportUtil).isHoliday(date, holidays) ? 'holiday' : ''}|"
+                            th:each="date: ${dates}"
+                        >
+                            <div class="na">
+                                        <span
+                                            class="day-text"
+                                            th:text="${T(com.zsoft.service.extensions.util.ActivityReportUtil).getActivityTotal(standardActivities, date)}"
+                                        ></span>
+                            </div>
+                        </td>
+                        <th></th>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+        <!-- EXCEPTIONAL ACTIVITIES -->
+        <div style="padding-top: 0.5cm;" th:if="${exceptionalActivities.size() > 0}">
+            <h3>
+                Astreintes
+            </h3>
+            <table cellpadding="0" cellspacing="0" class="additional-hours-table">
+                <thead>
+                <tr>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Date et Heure début
+                    </th>
+                    <th>
+                        Nombre d'heures
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="activity : ${exceptionalActivities}">
+                    <td th:if="${#strings.toString(activity.getType()) == ('ASTREINTE_ACTIVE')}">
+                        Astreinte
+                    </td>
+                    <td th:if="${#strings.toString(activity.getType()) == ('ASTREINTE_ACTIVE_SITE')}">
+                        Intervention sur site
+                    </td>
+                    <td th:if="${#strings.toString(activity.getType()) == ('ASTREINTE_PASSIVE')}">
+                        Astreinte passive
+                    </td>
+                    <td th:text="|${#temporals.format(activity.getDate(), 'EEEE dd, MMMM yyyy')} ${T(com.zsoft.service.extensions.util.ActivityReportUtil).nbrToHours(activity.getStart())}|">
+                        mercredi 13, mars 2019 à 09:00
+                    </td>
+                    <td th:text="${T(com.zsoft.service.extensions.util.ActivityReportUtil).nbrToHours(activity.getNbHours())}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="padding: 1cm 2cm 0 20cm;">
+            <small>
+                Signature et cachet
+            </small>
+        </div>
+    </div>
+</div>
+</body>
+</html>

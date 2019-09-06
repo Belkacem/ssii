@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mail/fragments :: page-head(#{email.resourceUpdateNotification.title(${new_resource.getFirstName()}, ${new_resource.getLastName()})})"></head>
+<body style="margin: 0; padding: 0; text-align: center;" bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Helvetica, Arial, sans-serif;">
+    <tbody>
+    <tr th:replace="mail/fragments :: table-header"></tr>
+    <tr>
+        <td style="line-height: 28px;">
+            <p th:text="#{email.resourceUpdateNotification.greeting(${company_owner.getFirstName() + ' ' + company_owner.getLastName()})}"></p>
+            <p>
+                <span th:text="#{email.resourceUpdateNotification.text1}"></span>
+                <b th:text="${new_resource.getFirstName() + ' ' + new_resource.getLastName()}"></b>
+                <span th:text="#{email.resourceUpdateNotification.text2}"></span>
+                <b th:text="${company.getName()}"></b>
+            </p>
+            <p th:text="#{email.resourceUpdateNotification.text3}"></p>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F2F2F2" style="font-size: 12px;">
+                <tr bgcolor="#dfdfdf">
+                    <th>Le champ</th>
+                    <th>Ancien</th>
+                    <th>Nouveau</th>
+                </tr>
+                <tr th:if="${old_resource.getFirstName() != new_resource.getFirstName() || old_resource.getLastName() != new_resource.getLastName()}">
+                    <th>Nom et Prénom</th>
+                    <td th:text="${old_resource.getFirstName() + ' ' + old_resource.getLastName()}"></td>
+                    <td th:text="${new_resource.getFirstName() + ' ' + new_resource.getLastName()}"></td>
+                </tr>
+                <tr th:if="${old_resource.getSecondaryEmail() != new_resource.getSecondaryEmail()}">
+                    <th>E-mail secondaire</th>
+                    <td th:text="${old_resource.getSecondaryEmail()}"></td>
+                    <td th:text="${new_resource.getSecondaryEmail()}"></td>
+                </tr>
+                <tr th:if="${old_resource.getGender() != new_resource.getGender()}">
+                    <th>Sexe</th>
+                    <td th:text="${old_resource.getGender()}"></td>
+                    <td th:text="${new_resource.getGender()}"></td>
+                </tr>
+                <tr th:if="${!old_resource.getDateOfBirth().isEqual(new_resource.getDateOfBirth())}">
+                    <th>Date de naissance</th>
+                    <td th:text="${#temporals.format(old_resource.getDateOfBirth(), 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#temporals.format(new_resource.getDateOfBirth(), 'dd/MM/yyyy')}"></td>
+                </tr>
+                <tr th:if="${old_resource.getPhoneNumber() != new_resource.getPhoneNumber()}">
+                    <th>N° Téléphone</th>
+                    <td th:text="${old_resource.getPhoneNumber()}"></td>
+                    <td th:text="${new_resource.getPhoneNumber()}"></td>
+                </tr>
+                <tr th:if="${
+                    old_resource.getAddressLine1() != new_resource.getAddressLine1()
+                    || old_resource.getAddressLine2() != new_resource.getAddressLine2()
+                    || old_resource.getCity() != new_resource.getCity()
+                    || old_resource.getCountry() != new_resource.getCountry()
+                    || old_resource.getPostalCode() != new_resource.getPostalCode()
+                }">
+                    <th>Adresse</th>
+                    <td th:text="${old_resource.getAddressLine1() + ' ' + old_resource.getAddressLine2() + ' - ' + old_resource.getCity() + ' - ' + old_resource.getPostalCode() + ', ' + old_resource.getCountry()}"></td>
+                    <td th:text="${new_resource.getAddressLine1() + ' ' + new_resource.getAddressLine2() + ' - ' + new_resource.getCity() + ' ' + new_resource.getPostalCode() + ', ' + new_resource.getCountry()}"></td>
+                </tr>
+            </table>
+
+            <p>
+                <span th:text="#{email.resourceUpdateNotification.signuature}">Regards, </span>
+            </p>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:replace="mail/fragments :: table-footer"></tfoot>
+</table>
+</body>
+</html>

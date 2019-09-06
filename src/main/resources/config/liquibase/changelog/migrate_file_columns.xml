@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!-- Migrate File Column From to entity Invoice. -->
+    <changeSet id="20190804122755-0" author="bessemzitouni">
+        <sql>
+            INSERT INTO `invoice_file` (`zs_file`, `zs_file_content_type`, `invoice_id`)
+            SELECT `invoice`.`zs_file`, `invoice`.`zs_file_content_type`, `invoice`.`id` FROM `invoice`
+            WHERE `invoice`.`zs_file` IS NOT NULL;
+        </sql>
+        <!-- Remove File column from entity invoice -->
+        <dropColumn columnName="zs_file" tableName="invoice"/>
+        <dropColumn columnName="zs_file_content_type" tableName="invoice"/>
+    </changeSet>
+    <!-- Migrate File Column From to entity ActivityReport. -->
+    <changeSet id="20190804122755-1" author="bessemzitouni">
+        <sql>
+            INSERT INTO `activity_report_file` (`zs_file`, `zs_file_content_type`, `activity_report_id`)
+            SELECT `activity_report`.`zs_file`, `activity_report`.`zs_file_content_type`, `activity_report`.`id` FROM `activity_report`
+            WHERE `activity_report`.`zs_file` IS NOT NULL;
+        </sql>
+        <!-- Remove File column from entity activity_report -->
+        <dropColumn columnName="zs_file" tableName="activity_report"/>
+        <dropColumn columnName="zs_file_content_type" tableName="activity_report"/>
+    </changeSet>
+    <!-- Migrate Justification Column From to entity Absence. -->
+    <changeSet id="20190804122755-2" author="bessemzitouni">
+        <sql>
+            INSERT INTO `absence_justification` (`zs_file`, `zs_file_content_type`, `absence_id`)
+            SELECT `absence`.`justification`, `absence`.`justification_content_type`, `absence`.`id` FROM `absence`
+            WHERE `absence`.`justification` IS NOT NULL;
+        </sql>
+        <!-- Remove Justification column from entity absence -->
+        <dropColumn columnName="justification" tableName="absence"/>
+        <dropColumn columnName="justification_content_type" tableName="absence"/>
+    </changeSet>
+    <!-- Migrate File Column From to entity Expense. -->
+    <changeSet id="20190804122755-3" author="bessemzitouni">
+        <sql>
+            INSERT INTO `expense_justification` (`zs_file`, `zs_file_content_type`, `expense_id`)
+            SELECT `expense`.`zs_file`, `expense`.`zs_file_content_type`, `expense`.`id` FROM `expense`
+            WHERE `expense`.`zs_file` IS NOT NULL;
+        </sql>
+        <!-- Remove File column from entity expense -->
+        <dropColumn columnName="zs_file" tableName="expense"/>
+        <dropColumn columnName="zs_file_content_type" tableName="expense"/>
+    </changeSet>
+
+</databaseChangeLog>

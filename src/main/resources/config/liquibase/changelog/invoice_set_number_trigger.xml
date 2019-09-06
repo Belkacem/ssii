@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        RESET ALL INVOICE NUMBERS
+    -->
+    <changeSet id="20190708123300-0" author="bessemzitouni" context="!test">
+        <sqlFile path="config/liquibase/sql/reset_invoice_number.sql" />
+    </changeSet>
+
+    <!--
+        SET INVOICE NUMBER BEFORE INSERT
+    -->
+    <changeSet id="20190708123319-0" author="bessemzitouni" context="!test">
+        <sqlFile path="config/liquibase/sql/set_invoice_number_before_insert.sql" />
+    </changeSet>
+</databaseChangeLog>

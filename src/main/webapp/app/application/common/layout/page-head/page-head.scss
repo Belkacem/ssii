@@ -1,0 +1,121 @@
+.page-head {
+  display: grid;
+  grid-template-columns: auto max-content;
+  grid-template-areas: 'pageheadtitle pageheadactions';
+  align-items: center;
+  background-color: white;
+  border-bottom: 1px solid #dde1e6;
+  padding: 0 16px;
+  min-height: 60px;
+  margin-bottom: 1rem;
+  &.bordered {
+    border-top: 1px solid #dde1e6;
+  }
+  &.no-margin {
+    margin: 0;
+  }
+  .page-head-content {
+    grid-area: pageheadtitle;
+    margin: 0;
+    .page-head-title {
+      font-weight: bold;
+      font-size: 14px;
+      padding-right: 12px;
+    }
+    .page-head-subtitle {
+      font-size: 12px;
+      font-weight: normal;
+      color: #cbc7c8;
+    }
+    .page-head-back-btn {
+      display: inline-block;
+      &.page-head-back-btn-mobile {
+        display: none;
+      }
+      a {
+        color: inherit;
+        display: inline-block;
+        padding: 4px 0;
+        font-size: 16px;
+        line-height: 100%;
+        cursor: pointer;
+      }
+      .ant-divider-vertical {
+        height: 14px;
+        margin: 0 12px;
+      }
+    }
+  }
+  .page-head-actions {
+    grid-area: pageheadactions;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    > * {
+      margin-left: 4px;
+    }
+    > *:first-child {
+      margin-left: 0;
+    }
+    .ant-btn-textual {
+      height: 32px;
+      line-height: 14px;
+      padding: 0 8px;
+      span:not(.ant-badge) {
+        font-size: 10px;
+      }
+      .anticon + span {
+        margin-left: 4px;
+      }
+      .anticon {
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.ant-affix {
+  .page-head.bordered {
+    border-top: none;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 576px) {
+  .page-head {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 40px max-content;
+    grid-template-areas: 'pageheadtitle' 'pageheadactions';
+    min-height: 40px;
+    .page-head-content {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 14px;
+    }
+    .page-head-actions {
+      height: 40px;
+      text-align: center;
+      background: #eceff1;
+      margin: 0 -16px;
+      padding: 0 16px;
+      overflow-x: auto;
+      > * {
+        flex: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .page-head {
+    .page-head-content {
+      .page-head-back-btn {
+        &.page-head-back-btn-mobile {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

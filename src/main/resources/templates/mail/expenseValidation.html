@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mail/fragments :: page-head(#{email.expenseValidation.title})"></head>
+<body style="margin: 0; padding: 0; text-align: center;" bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Helvetica, Arial, sans-serif;">
+    <tbody>
+    <tr th:replace="mail/fragments :: table-header"></tr>
+    <tr>
+        <td style="line-height: 28px;">
+
+            <p th:text="#{email.expenseValidation.greeting(${resource.getLastName()})}"></p>
+            <p th:if="${#strings.toString(expense.getValidationStatus()) == 'APPROVED'}" th:text="#{email.expenseValidation.text1(${expense_validator.getFullname()})}"></p>
+            <p th:if="${#strings.toString(expense.getValidationStatus()) == 'REJECTED'}" th:text="#{email.expenseValidation.text2(${expense_validator.getFullname()})}"></p>
+            <p th:text="#{email.expenseValidation.text3(
+                ${#temporals.format(expense.getDate(), 'dd/MM/yyyy')},
+                ${#numbers.formatDecimal(expense.getAmount(), 0, 'COMMA', 2, 'POINT')},
+                ${expense_type.getType()}
+            )}"></p>
+            <p>
+                <span th:text="#{email.expenseValidation.signuature}">Regards, </span>
+            </p>
+
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:replace="mail/fragments :: table-footer"></tfoot>
+</table>
+</body>
+</html>

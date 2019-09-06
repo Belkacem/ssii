@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="20190417094505-1" author="bessemzitouni">
+        <!-- Added the constraints for entity Resource. -->
+        <addUniqueConstraint columnNames="user_id, company_id"
+                             constraintName="unique_resource_by_company"
+                             tableName="resource"/>
+        <!-- Added the constraints for entity Absence Validator. -->
+        <addUniqueConstraint columnNames="user_id, company_id"
+                             constraintName="unique_absence_validator_by_company"
+                             tableName="absence_validator"/>
+        <!-- Added the constraints for entity Project Validator. -->
+        <addUniqueConstraint columnNames="user_id, project_id"
+                             constraintName="unique_project_validator_by_project"
+                             tableName="project_validator"/>
+    </changeSet>
+</databaseChangeLog>

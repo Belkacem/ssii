@@ -1,0 +1,20 @@
+<svg width="612" height="612" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient spreadMethod="pad" y2="1" x2="1" y1="0" x1="0" id="svg_4">
+   <stop offset="0" stop-color="#736cc7"/>
+   <stop offset="1" stop-color="#3190f0"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="614" width="614" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" d="m612,510c0,56.1 -45.9,102 -102,102l-408,0c-56.1,0 -102,-45.9 -102,-102l0,-408c0,-56.1 45.9,-102 102,-102l408,0c56.1,0 102,45.9 102,102l0,408z" fill="url(#svg_4)"/>
+  <g stroke="null" id="svg_9">
+   <polygon fill="#ffffff" stroke="null" id="svg_7" points="198.49850463867188,124.77999877929688 442.435791015625,124.77999877929688 312.8567810058594,350.7410583496094 332.8348083496094,222.60488891601562 198.49850463867188,221.9156494140625 "/>
+   <polygon stroke="null" id="svg_8" points="413.5014953613281,487.2200012207031 169.564208984375,487.2200012207031 299.1438293457031,261.2593994140625 279.1651916503906,389.3957214355469 413.5014953613281,390.0843811035156 " fill="#ffffff"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mail/fragments :: page-head(#{email.invitation.title})"></head>
+<body style="margin: 0; padding: 0; text-align: center;" bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family: Helvetica, Arial, sans-serif;">
+    <tbody>
+    <tr th:replace="mail/fragments :: table-header"></tr>
+    <tr>
+        <td style="line-height: 28px;">
+            <p th:text="#{email.invitation.greeting}"></p>
+            <p th:text="#{email.invitation.text1}"></p>
+            <p>
+                <a th:with="url=(@{|${baseUrl}/#/reset/finish?key=${user.resetKey}|})" th:href="${url}"
+                   th:text="#{email.invitation.button}" style="margin-bottom: 15px;display: inline-block;font-size: 18px;font-weight: bold;color: #ffffff;text-decoration: none;background-color: #f8005f;padding: 10px 20px;border-radius: 5px;border-bottom: 2px solid #880E4F;"></a>
+                <br/>
+                <span th:text="#{email.template.copylink}" style="color: #455A64;font-size: 12px;">OR Copy - Paste the link</span>
+                <br/>
+                <a th:with="url=(@{|${baseUrl}/#/reset/finish?key=${user.resetKey}|})" th:href="${url}"
+                   th:text="${url}"></a>
+            </p>
+            <p>
+                <span th:text="#{email.invitation.text2}">Regards, </span>
+            </p>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot th:replace="mail/fragments :: table-footer"></tfoot>
+</table>
+</body>
+</html>

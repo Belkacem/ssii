@@ -1,0 +1,36 @@
+/* AVATAR */
+.avatar {
+  display: inline-block;
+  color: white;
+  .avatar-inner {
+    position: relative;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    span,
+    svg {
+      z-index: 2;
+      position: relative;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.brand-logo {
+  .avatar {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.resource-meta {
+  .avatar {
+    margin-right: 5px;
+    border: 1px solid lightgrey;
+    padding: 2px;
+  }
+}

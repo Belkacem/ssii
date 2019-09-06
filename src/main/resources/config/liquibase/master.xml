@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100740_added_entity_Holiday.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100741_added_entity_PersistedConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100742_added_entity_Company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100743_added_entity_Resource.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100744_added_entity_ResourceContract.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100745_added_entity_Absence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100746_added_entity_AbsenceType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100747_added_entity_AbsenceValidator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100748_added_entity_AbsenceBalance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100749_added_entity_AbsenceBalanceAdjustment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100750_added_entity_Project.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100751_added_entity_ProjectResource.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100752_added_entity_ProjectResourceInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100753_added_entity_ProjectValidator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100754_added_entity_ProjectContractor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100755_added_entity_StandardActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100756_added_entity_ExceptionalActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100757_added_entity_ActivityReport.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100758_added_entity_Client.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100759_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100800_added_entity_InvoiceItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125644_added_entity_Expense.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125645_added_entity_ExpenseType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125646_added_entity_ExpenseValidator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125630_added_entity_ResourceConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190719153003_added_entity_ClientContact.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190725131013_added_entity_Constant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103317_added_entity_InvoiceFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103318_added_entity_ActivityReportFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103319_added_entity_AbsenceJustification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103320_added_entity_ExpenseJustification.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20190303100741_added_entity_constraints_PersistedConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100742_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100743_added_entity_constraints_Resource.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100744_added_entity_constraints_ResourceContract.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100745_added_entity_constraints_Absence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100747_added_entity_constraints_AbsenceValidator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100748_added_entity_constraints_AbsenceBalance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100749_added_entity_constraints_AbsenceBalanceAdjustment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100750_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100751_added_entity_constraints_ProjectResource.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100752_added_entity_constraints_ProjectResourceInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100753_added_entity_constraints_ProjectValidator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100754_added_entity_constraints_ProjectContractor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100755_added_entity_constraints_StandardActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100756_added_entity_constraints_ExceptionalActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100757_added_entity_constraints_ActivityReport.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100758_added_entity_constraints_Client.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100759_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190303100800_added_entity_constraints_InvoiceItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125644_added_entity_constraints_Expense.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125646_added_entity_constraints_ExpenseValidator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190501125630_added_entity_constraints_ResourceConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190719153003_added_entity_constraints_ClientContact.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103317_added_entity_constraints_InvoiceFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103318_added_entity_constraints_ActivityReportFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103319_added_entity_constraints_AbsenceJustification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190804103320_added_entity_constraints_ExpenseJustification.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/constraints_StandardActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/load_default_data.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/absence_balance_triggers.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/constraints_entity_by_company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_column_attach_activity_report_entity_Client.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_columns_periode_entity_project_resource.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/constraints_PersistedConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_columns_description_entity_absence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_column_validation_status_entity_expense.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/drop_column_end_date_entity_project_resource_info.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/invoice_set_number_trigger.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_column_separate_invoices_entity_Client.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_column_gender_entity_Absence_type.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/added_column_payment_date_entity_invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/migrate_file_columns.xml" relativeToChangelogFile="false"/>
+</databaseChangeLog>

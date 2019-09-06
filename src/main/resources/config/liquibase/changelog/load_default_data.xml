@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <changeSet id="20181218201132-1" author="jhipster">
+        <!-- Absence types -->
+        <loadData encoding="UTF-8" file="config/liquibase/absence_types.csv" separator=";" tableName="absence_type">
+            <column name="zs_type" type="STRING"/>
+            <column name="code" type="numeric"/>
+            <column name="has_balance" type="boolean"/>
+        </loadData>
+        <!-- Holidays -->
+        <loadData encoding="UTF-8" file="config/liquibase/holidays.csv" separator=";" tableName="holiday">
+            <column name="name" type="STRING"/>
+            <column name="zs_date" type="DATE"/>
+            <column name="description" type="STRING"/>
+        </loadData>
+        <!-- Expense Types -->
+        <loadData encoding="UTF-8" file="config/liquibase/expense_types.csv" separator=";" tableName="expense_type">
+            <column name="zs_type" type="STRING"/>
+            <column name="code" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

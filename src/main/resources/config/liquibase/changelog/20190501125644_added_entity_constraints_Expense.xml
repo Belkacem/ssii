@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Expense.
+    -->
+    <changeSet id="20190501125644-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="resource_id"
+                                 baseTableName="expense"
+                                 constraintName="fk_expense_resource_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="resource"/>
+
+        <addForeignKeyConstraint baseColumnNames="project_resource_id"
+                                 baseTableName="expense"
+                                 constraintName="fk_expense_project_resource_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project_resource"/>
+
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="expense"
+                                 constraintName="fk_expense_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="expense_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="creator_id"
+                                 baseTableName="expense"
+                                 constraintName="fk_expense_creator_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="zs_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="validator_id"
+                                 baseTableName="expense"
+                                 constraintName="fk_expense_validator_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="expense_validator"/>
+
+    </changeSet>
+</databaseChangeLog>
